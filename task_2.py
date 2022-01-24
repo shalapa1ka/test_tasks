@@ -1,4 +1,3 @@
-# import collections
 import re
 
 
@@ -7,13 +6,15 @@ def most_common_words(text: str) -> list:
     pattern = re.compile(r"[a-z']+")
     data = re.findall(pattern, text)
 
-    # result = [item[0] for item in collections.Counter(data).most_common()]
     count_dict = {}
     for item in data:
         if item in count_dict:
             count_dict[item] += 1
         else:
-            count_dict[item] = 0
+            count_dict[item] = 1
 
-    result = list(count_dict)
+    sorted_tuples = sorted(count_dict.items(), key=lambda x: x[1], reverse=True)
+    sorted_dict = {k: v for k, v in sorted_tuples}
+    result = list(sorted_dict)
+
     return result[:3] if len(result) >= 3 else []
